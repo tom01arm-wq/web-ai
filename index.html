@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nuclear Energy Explorer</title>
+    <title>Clear & Clear with Nuclear - ทำความเข้าใจนิวเคลียร์</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
@@ -11,136 +11,569 @@
 <body class="bg-gray-50 text-gray-800 font-sans scroll-smooth">
 
     <!-- Navigation -->
-    <nav class="fixed w-full bg-slate-900 text-white z-50 shadow-lg">
+    <nav class="fixed w-full bg-slate-900 text-white z-50 shadow-lg transition-all duration-300" id="navbar">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <h1 class="text-2xl font-bold tracking-tighter"><i class="fas fa-atom text-blue-400 mr-2"></i>NUCLEA</h1>
+            <h1 class="text-2xl font-bold tracking-tighter">
+                <i class="fas fa-atom text-blue-400 mr-2"></i>NUCLEAR
+            </h1>
             <div class="hidden md:flex space-x-6">
-                <a href="#home" class="hover:text-blue-400">หน้าแรก</a>
-                <a href="#basics" class="hover:text-blue-400">พื้นฐาน</a>
-                <a href="#reactors" class="hover:text-blue-400">เครื่องปฏิกรณ์</a>
-                <a href="#pros-cons" class="hover:text-blue-400">วิเคราะห์</a>
-                <a href="#timeline" class="hover:text-blue-400">ประวัติศาสตร์</a>
-                <a href="#quiz" class="bg-blue-600 px-4 py-1 rounded-full hover:bg-blue-500 transition">ทำแบบทดสอบ</a>
+                <a href="#home" class="hover:text-blue-400 transition-colors">หน้าแรก</a>
+                <a href="#basics" class="hover:text-blue-400 transition-colors">พื้นฐาน</a>
+                <a href="#daily" class="hover:text-blue-400 transition-colors">ชีวิตประจำวัน</a>
+                <a href="#concerns" class="hover:text-blue-400 transition-colors">คำถามที่พบบ่อย</a>
+                <a href="#quiz" class="bg-blue-600 px-4 py-1 rounded-full hover:bg-blue-500 transition-all">ทดสอบความรู้</a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <header id="home" class="h-screen gradient-bg text-white flex items-center justify-center pt-16">
-        <div class="text-center px-4">
-            <h2 class="text-5xl md:text-7xl font-extrabold mb-6">พลังงานแห่งอนาคต</h2>
-            <p class="text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto">เจาะลึกวิทยาศาสตร์ เบื้องหลังพลังงานที่ขับเคลื่อนโลก และกุญแจสู่พลังงานสะอาดที่ยั่งยืน</p>
+    <header id="home" class="min-h-screen gradient-bg text-white flex items-center justify-center pt-16 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-20">
+            <div class="absolute top-20 left-20 w-32 h-32 bg-blue-500 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-20 right-20 w-48 h-48 bg-purple-500 rounded-full blur-3xl"></div>
+        </div>
+        <div class="text-center px-4 relative z-10">
+            <h2 class="text-5xl md:text-7xl font-extrabold mb-6">
+                Clear & Clear <span class="text-blue-400">with Nuclear</span>
+            </h2>
+            <p class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto">
+                เอกสารเรียบเรียงเนื้อหาเกี่ยวกับนิวเคลียร์ มุ่งเน้นการสื่อสารด้วยภาษาที่เข้าใจง่าย 
+                ยึดตามแหล่งข้อมูลทางวิชาการที่ตรวจสอบได้
+            </p>
             <div class="mt-10">
-                <a href="#basics" class="bg-white text-slate-900 px-8 py-3 rounded-full font-bold text-lg hover:bg-blue-400 hover:text-white transition">เริ่มต้นเรียนรู้</a>
+                <a href="#basics" class="bg-white text-slate-900 px-8 py-3 rounded-full font-bold text-lg hover:bg-blue-400 hover:text-white transition-all inline-block">
+                    เริ่มต้นเรียนรู้ <i class="fas fa-arrow-down ml-2"></i>
+                </a>
             </div>
         </div>
     </header>
 
-    <!-- Section: Basics -->
-    <section id="basics" class="py-20 container mx-auto px-6">
-        <div class="text-center mb-16">
-            <h3 class="text-3xl font-bold mb-4">หลักการทำงาน: Fission vs Fusion</h3>
-            <div class="h-1 w-20 bg-blue-600 mx-auto"></div>
-        </div>
-        <div class="grid md:grid-cols-2 gap-12">
-            <div class="bg-white p-8 rounded-2xl shadow-xl border-t-4 border-blue-500">
-                <h4 class="text-2xl font-bold mb-4">Nuclear Fission (การแบ่งตัว)</h4>
-                <p>กระบวนการที่นิวเคลียสของอะตอมหนัก (เช่น ยูเรเนียม) แตกตัวออกเป็นนิวเคลียสที่เล็กลง พร้อมปลดปล่อยพลังงานมหาศาลและนิวตรอนออกมา เป็นหลักการที่ใช้อยู่ใน **โรงไฟฟ้านิวเคลียร์ปัจจุบัน**</p>
-            </div>
-            <div class="bg-white p-8 rounded-2xl shadow-xl border-t-4 border-purple-500">
-                <h4 class="text-2xl font-bold mb-4">Nuclear Fusion (การรวมตัว)</h4>
-                <p>กระบวนการที่นิวเคลียสของอะตอมเบา (เช่น ไฮโดรเจน) รวมตัวกันเป็นนิวเคลียสที่หนักขึ้น ปล่อยพลังงานสะอาดมากกว่าหลายเท่า (เหมือนที่เกิดขึ้นบนดวงอาทิตย์) อยู่ในขั้น **วิจัยและพัฒนา**</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Section: Reactors -->
-    <section id="reactors" class="py-20 bg-gray-100">
+    <!-- Table of Contents -->
+    <section class="py-16 bg-white">
         <div class="container mx-auto px-6">
-            <h3 class="text-3xl font-bold text-center mb-12">ประเภทของเครื่องปฏิกรณ์</h3>
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="bg-white rounded-lg overflow-hidden shadow-md">
-                    <div class="p-6">
-                        <h5 class="font-bold text-xl mb-2">PWR (Pressurized Water Reactor)</h5>
-                        <p class="text-gray-600 text-sm">ใช้กันมากที่สุดในโลก ใช้น้ำความดันสูงเป็นตัวหล่อเย็นและตัวหน่วงนิวตรอน</p>
+            <div class="text-center mb-12">
+                <h3 class="text-3xl font-bold mb-4">สารบัญ</h3>
+                <div class="h-1 w-20 bg-blue-600 mx-auto"></div>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <a href="#basics" class="group">
+                    <div class="bg-gradient-to-br from-blue-500 to-blue-700 p-8 rounded-2xl text-white transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                        <i class="fas fa-book-open text-4xl mb-4"></i>
+                        <h4 class="text-xl font-bold mb-2">1. พื้นฐานนิวเคลียร์ที่ควรทราบ</h4>
+                        <p class="text-blue-100 text-sm">เรียนรู้พื้นฐานของพลังงานนิวเคลียร์ ฟิชชัน ฟิวชัน และรังสี</p>
                     </div>
-                </div>
-                <div class="bg-white rounded-lg overflow-hidden shadow-md">
-                    <div class="p-6">
-                        <h5 class="font-bold text-xl mb-2">BWR (Boiling Water Reactor)</h5>
-                        <p class="text-gray-600 text-sm">ต้มน้ำจนกลายเป็นไอโดยตรงภายในถังปฏิกรณ์เพื่อไปหมุนกังหัน</p>
+                </a>
+                <a href="#daily" class="group">
+                    <div class="bg-gradient-to-br from-green-500 to-green-700 p-8 rounded-2xl text-white transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                        <i class="fas fa-seedling text-4xl mb-4"></i>
+                        <h4 class="text-xl font-bold mb-2">2. นิวเคลียร์ในชีวิตประจำวัน</h4>
+                        <p class="text-green-100 text-sm">การแพทย์ การเกษตร อุตสาหกรรม และการผลิตไฟฟ้า</p>
                     </div>
-                </div>
-                <div class="bg-white rounded-lg overflow-hidden shadow-md">
-                    <div class="p-6">
-                        <h5 class="font-bold text-xl mb-2">SMR (Small Modular Reactor)</h5>
-                        <p class="text-gray-600 text-sm">เทคโนโลยีใหม่ ขนาดเล็ก ปลอดภัยสูง และก่อสร้างได้รวดเร็ว</p>
+                </a>
+                <a href="#concerns" class="group">
+                    <div class="bg-gradient-to-br from-orange-500 to-orange-700 p-8 rounded-2xl text-white transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                        <i class="fas fa-question-circle text-4xl mb-4"></i>
+                        <h4 class="text-xl font-bold mb-2">3. คำถามที่สังคมกังวล</h4>
+                        <p class="text-orange-100 text-sm">คำตอบสำหรับคำถามที่พบบ่อยเกี่ยวกับนิวเคลียร์</p>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- Section: Pros & Cons -->
-    <section id="pros-cons" class="py-20 container mx-auto px-6">
-        <div class="grid md:grid-cols-2 gap-10">
-            <div class="bg-green-50 p-8 rounded-2xl">
-                <h4 class="text-2xl font-bold text-green-700 mb-4"><i class="fas fa-check-circle mr-2"></i>ข้อดี</h4>
-                <ul class="space-y-3">
-                    <li>- ไม่มีการปล่อยก๊าซเรือนกระจก (Low Carbon)</li>
-                    <li>- ให้พลังงานสูงและเสถียร (Baseload Power)</li>
-                    <li>- ต้นทุนเชื้อเพลิงต่ำเมื่อเทียบกับปริมาณไฟฟ้า</li>
-                </ul>
-            </div>
-            <div class="bg-red-50 p-8 rounded-2xl">
-                <h4 class="text-2xl font-bold text-red-700 mb-4"><i class="fas fa-exclamation-triangle mr-2"></i>ข้อเสีย</h4>
-                <ul class="space-y-3">
-                    <li>- การจัดการกากกัมมันตรังสีในระยะยาว</li>
-                    <li>- ค่าก่อสร้างเบื้องต้นสูงมาก</li>
-                    <li>- ความเสี่ยงหากเกิดอุบัติเหตุร้ายแรง</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <!-- Section: Timeline -->
-    <section id="timeline" class="py-20 bg-slate-900 text-white">
+    <!-- Section 1: Basics -->
+    <section id="basics" class="py-20 bg-gray-100">
         <div class="container mx-auto px-6">
-            <h3 class="text-3xl font-bold text-center mb-12">ประวัติศาสตร์นิวเคลียร์</h3>
-            <div class="border-l-4 border-blue-500 ml-4 md:mx-auto md:w-1/2 space-y-10 py-4">
-                <div class="relative pl-8">
-                    <span class="absolute -left-3 bg-blue-500 w-5 h-5 rounded-full"></span>
-                    <h5 class="font-bold text-blue-400">1938</h5>
-                    <p>การค้นพบการแบ่งตัวของนิวเคลียส (Nuclear Fission)</p>
+            <div class="text-center mb-16">
+                <span class="bg-blue-600 text-white px-4 py-1 rounded-full text-sm font-medium">ส่วนที่ 1</span>
+                <h3 class="text-4xl font-bold mt-4 mb-4">พื้นฐานนิวเคลียร์ที่ควรทราบ</h3>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    คำว่า"นิวเคลียร์"มักถูกเชื่อมโยงกับอาวุธหรือภัยอันตราย อย่างไรก็ตาม 
+                    ในทางวิทยาศาสตร์ นิวเคลียร์มีความหมายกว้างกว่านั้นมาก
+                </p>
+            </div>
+
+            <!-- What is Nuclear Energy -->
+            <div class="bg-white rounded-3xl p-8 md:p-12 shadow-xl mb-12 transform hover:scale-[1.02] transition-transform">
+                <div class="flex items-center mb-6">
+                    <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center text-white text-2xl mr-4">
+                        <i class="fas fa-atom"></i>
+                    </div>
+                    <h4 class="text-3xl font-bold">พลังงานนิวเคลียร์คืออะไร?</h4>
                 </div>
-                <div class="relative pl-8">
-                    <span class="absolute -left-3 bg-blue-500 w-5 h-5 rounded-full"></span>
-                    <h5 class="font-bold text-blue-400">1954</h5>
-                    <p>โรงไฟฟ้านิวเคลียร์แห่งแรกของโลกเชื่อมต่อสายส่ง (Obninsk, USSR)</p>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="space-y-4">
+                        <p class="text-lg leading-relaxed">
+                            พลังงานนิวเคลียร์คือพลังงานที่เกิดจากการเปลี่ยนแปลงภายใน<strong>นิวเคลียส</strong>ของอะตอม 
+                            อะตอมหนึ่งประกอบด้วยนิวเคลียสซึ่งมี<strong>โปรตอน (proton)</strong> และ<strong>นิวตรอน (neutron)</strong> 
+                            รวมตัวกันอยู่ตรงศูนย์กลาง และมี<strong>อิเล็กตรอน (electron)</strong> เคลื่อนที่อยู่รอบนอก
+                        </p>
+                        <div class="bg-blue-50 p-6 rounded-xl border-l-4 border-blue-500">
+                            <p class="text-blue-800">
+                                <i class="fas fa-lightbulb mr-2"></i>
+                                <strong>เปรียบเทียบ:</strong> หากอะตอมมีขนาดเท่าสนามฟุตบอล 
+                                นิวเคลียสจะมีขนาดเพียงเท่าลูกแก้วเท่านั้น 
+                                แต่มีมวลเกือบทั้งหมดของอะตอมรวมอยู่ภายใน!
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-center">
+                        <div class="flex flex-col items-center">
+                        <div id="interactive-atom" class="atom-card" role="button" tabindex="0" aria-label="แบบจำลองอะตอมแบบโต้ตอบ คลิกเพื่อกระตุ้นนิวเคลียส">
+                            <div class="nucleus" id="atom-nucleus">
+                                <span class="nucleus-dot"></span>
+                            </div>
+
+                            <div class="orbit orbit-1">
+                                <div class="electron"></div>
+                            </div>
+
+                            <div class="orbit orbit-2">
+                                <div class="electron"></div>
+                            </div>
+
+                            <div class="orbit orbit-3">
+                                <div class="electron"></div>
+                            </div>
+                        </div>
+                        <p class="text-center text-sm text-gray-600 mt-3">คลิกอะตอมเพื่อกระตุ้นนิวเคลียส</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="relative pl-8">
-                    <span class="absolute -left-3 bg-blue-500 w-5 h-5 rounded-full"></span>
-                    <h5 class="font-bold text-blue-400">2020s+</h5>
-                    <p>ยุคของ Gen IV และการมุ่งสู่พาณิชย์ของพลังงาน Fusion</p>
+            </div>
+
+            <!-- Fission vs Fusion -->
+            <div class="grid md:grid-cols-2 gap-8 mb-12">
+                <div class="bg-white p-8 rounded-2xl shadow-xl border-t-4 border-red-500 transform hover:-translate-y-2 transition-transform">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-cut text-3xl text-red-500 mr-3"></i>
+                        <h4 class="text-2xl font-bold">ฟิชชัน (Fission)</h4>
+                    </div>
+                    <p class="text-gray-700 mb-4">
+                        การแตกตัวของนิวเคลียสขนาดใหญ่ให้เป็นนิวเคลียสที่เล็กลง พร้อมปล่อยพลังงานออกมา
+                    </p>
+                    <div class="bg-red-50 p-4 rounded-lg">
+                        <p class="text-sm text-red-800">
+                            <strong>ตัวอย่าง:</strong> เมื่อนิวตรอนพุ่งชน ยูเรเนียม-235 
+                            จะแตกออกเป็นแบเรียมและคริปตอน พร้อมปล่อยนิวตรอน 2-3 ตัว 
+                            เกิดเป็น<strong>ปฏิกิริยาลูกโซ่</strong>
+                        </p>
+                    </div>
+                    <div class="mt-4 flex items-center text-sm text-gray-600">
+                        <i class="fas fa-industry mr-2"></i>
+                        ใช้ในโรงไฟฟ้านิวเคลียร์ปัจจุบัน
+                    </div>
+                </div>
+
+                <div class="bg-white p-8 rounded-2xl shadow-xl border-t-4 border-purple-500 transform hover:-translate-y-2 transition-transform">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-compress-arrows-alt text-3xl text-purple-500 mr-3"></i>
+                        <h4 class="text-2xl font-bold">ฟิวชัน (Fusion)</h4>
+                    </div>
+                    <p class="text-gray-700 mb-4">
+                        การรวมตัวของนิวเคลียสขนาดเล็กให้เป็นนิวเคลียสที่ใหญ่ขึ้น พร้อมปล่อยพลังงาน
+                    </p>
+                    <div class="bg-purple-50 p-4 rounded-lg">
+                        <p class="text-sm text-purple-800">
+                            <strong>ต้องการอุณหภูมิ ~10 ล้าน°C</strong> ให้พลังงานแก่นิวเคลียสมากพอ
+                            ที่จะชนะแรงผลักทางไฟฟ้า
+                        </p>
+                    </div>
+                    <div class="mt-4 flex items-center text-sm text-gray-600">
+                        <i class="fas fa-sun mr-2"></i>
+                        พลังงานสะอาดมากกว่าฟิชชัน 4 เท่า/กก.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comparison -->
+            <div class="bg-gradient-to-r from-red-500 to-purple-600 rounded-2xl p-8 text-white mb-12">
+                <h4 class="text-2xl font-bold text-center mb-6">เปรียบเทียบกำลังผลิต</h4>
+                <div class="grid md:grid-cols-3 gap-6 text-center">
+                    <div class="bg-white bg-opacity-20 p-6 rounded-xl backdrop-blur">
+                        <p class="text-4xl font-bold mb-2">1x</p>
+                        <p class="text-sm">ฟิชชัน (Fission)</p>
+                    </div>
+                    <div class="bg-white bg-opacity-20 p-6 rounded-xl backdrop-blur">
+                        <p class="text-4xl font-bold mb-2">4x</p>
+                        <p class="text-sm">ฟิวชัน (Fusion)</p>
+                    </div>
+                    <div class="bg-white bg-opacity-20 p-6 rounded-xl backdrop-blur">
+                        <p class="text-4xl font-bold mb-2">4M x</p>
+                        <p class="text-sm">เทียบกับเผาไหม้น้ำมัน/ถ่านหิน</p>
+                    </div>
+                </div>
+                <p class="text-center mt-4 text-sm opacity-90">ที่มา: IAEA - International Atomic Energy Agency</p>
+            </div>
+
+            <!-- Radiation Section -->
+            <div class="bg-white rounded-3xl p-8 md:p-12 shadow-xl">
+                <div class="text-center mb-8">
+                    <i class="fas fa-radiation text-5xl text-yellow-500 mb-4"></i>
+                    <h4 class="text-3xl font-bold">รังสี (Radiation)</h4>
+                    <p class="text-gray-600 mt-2">พลังงานที่เคลื่อนที่จากที่หนึ่งไปยังอีกที่หนึ่ง</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8 mb-8">
+                    <div class="bg-green-50 p-6 rounded-xl border-l-4 border-green-500">
+                        <h5 class="text-xl font-bold text-green-700 mb-3">
+                            <i class="fas fa-check-circle mr-2"></i>รังสีไม่ไอออนไนซ์
+                        </h5>
+                        <p class="text-gray-700 mb-3">
+                            พลังงานต่ำ ไม่ทำให้อิเล็กตรอนหลุดจากอะตอม แต่ทำให้เกิดความร้อนได้
+                        </p>
+                        <ul class="text-sm text-gray-600 space-y-2">
+                            <li><i class="fas fa-wifi mr-2"></i>คลื่นวิทยุ</li>
+                            <li><i class="fas fa-broadcast-tower mr-2"></i>ไมโครเวฟ</li>
+                            <li><i class="fas fa-sun mr-2"></i>แสงvisible</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-yellow-50 p-6 rounded-xl border-l-4 border-yellow-500">
+                        <h5 class="text-xl font-bold text-yellow-700 mb-3">
+                            <i class="fas fa-exclamation-triangle mr-2"></i>รังสีไอออนไนซ์
+                        </h5>
+                        <p class="text-gray-700 mb-3">
+                            พลังงานสูง แยกอิเล็กตรอนออกจากอะตอมได้ ขึ้นอยู่กับมาตรการควบคุม
+                        </p>
+                        <ul class="text-sm text-gray-600 space-y-2">
+                            <li><i class="fas fa-circle text-xs text-red-500 mr-2"></i>รังสีแอลฟา (α)</li>
+                            <li><i class="fas fa-circle text-xs text-orange-500 mr-2"></i>รังสีเบตา (β)</li>
+                            <li><i class="fas fa-circle text-xs text-purple-500 mr-2"></i>รังสีแกมมา (γ)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-gray-100 p-6 rounded-xl">
+                    <h5 class="font-bold mb-4">ความสามารถในการทะลุทะลวง</h5>
+                    <div class="space-y-3">
+                        <div class="flex items-center">
+                            <span class="w-20 font-medium">แอลฟา (α)</span>
+                            <div class="flex-1 bg-gray-300 h-4 rounded-full mx-4 overflow-hidden">
+                                <div class="bg-red-500 h-full rounded-full" style="width: 10%"></div>
+                            </div>
+                            <span class="text-sm text-gray-600">หยุดด้วยกระดาษ</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="w-20 font-medium">เบตา (β)</span>
+                            <div class="flex-1 bg-gray-300 h-4 rounded-full mx-4 overflow-hidden">
+                                <div class="bg-orange-500 h-full rounded-full" style="width: 40%"></div>
+                            </div>
+                            <span class="text-sm text-gray-600">ทะลุอลูมิเนียม</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="w-20 font-medium">แกมมา (γ)</span>
+                            <div class="flex-1 bg-gray-300 h-4 rounded-full mx-4 overflow-hidden">
+                                <div class="bg-purple-500 h-full rounded-full" style="width: 90%"></div>
+                            </div>
+                            <span class="text-sm text-gray-600">ต้องใช้ตะกั่ว/คอนกรีตหนา</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Section: Interactive Quiz -->
-    <section id="quiz" class="py-20 bg-blue-600 text-white">
-        <div class="container mx-auto px-6 max-w-2xl bg-white text-slate-900 p-10 rounded-3xl shadow-2xl">
-            <h3 class="text-3xl font-bold text-center mb-6">Quiz ทดสอบความรู้</h3>
-            <div id="quiz-container">
-                <p id="question" class="text-xl mb-6 font-medium">โหลดคำถาม...</p>
-                <div id="options" class="grid gap-4"></div>
-                <div id="result" class="mt-6 text-center font-bold text-xl hidden"></div>
+    <!-- Section 2: Daily Life -->
+    <section id="daily" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="bg-green-600 text-white px-4 py-1 rounded-full text-sm font-medium">ส่วนที่ 2</span>
+                <h3 class="text-4xl font-bold mt-4 mb-4">นิวเคลียร์ในชีวิตประจำวัน</h3>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    ชีวิตประจำวันของทุกคนเกี่ยวข้องกับรังสีนิวเคลียร์อยู่แล้ว 
+                    ทั้งจากธรรมชาติและที่มนุษย์สร้างขึ้นมาใช้ประโยชน์
+                </p>
+            </div>
+
+            <!-- Nuclear Power Plant -->
+            <div class="mb-16">
+                <div class="flex items-center mb-8">
+                    <div class="w-14 h-14 bg-blue-600 rounded-xl flex items-center justify-center text-white text-2xl mr-4">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h4 class="text-3xl font-bold">1. โรงไฟฟ้านิวเคลียร์</h4>
+                </div>
+                <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-8">
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="space-y-4">
+                            <p class="text-lg leading-relaxed">
+                                โรงไฟฟ้านิวเคลียร์ใช้<strong>ปฏิกิริยาฟิชชัน</strong>ของธาตุหนัก (ยูเรเนียม-235) 
+                                เป็นแหล่งพลังงานทางเลือกเมื่อความต้องการใช้พลังงานเพิ่มมากขึ้น
+                            </p>
+                            <div class="space-y-2">
+                                <p class="font-medium">หลักการทำงาน:</p>
+                                <div class="flex items-center space-x-2 text-sm">
+                                    <span class="bg-red-500 text-white px-3 py-1 rounded">ฟิชชัน</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                    <span class="bg-orange-500 text-white px-3 py-1 rounded">ความร้อน</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                    <span class="bg-blue-500 text-white px-3 py-1 rounded">ต้มน้ำ</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                    <span class="bg-green-500 text-white px-3 py-1 rounded">หมุนกังหัน</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                    <span class="bg-yellow-500 text-white px-3 py-1 rounded">ไฟฟ้า</span>
+                                </div>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg shadow">
+                                <p class="text-sm text-gray-700">
+                                    <i class="fas fa-leaf text-green-500 mr-2"></i>
+                                    <strong>ข้อดี:</strong> ไม่มีการเผาไหม้เชื้อเพลิงฟอสซิล 
+                                    ไม่เกิดมลภาวะในอากาศและฝนกรด
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-center">
+                            <div class="relative">
+                                <div class="w-48 h-48 border-4 border-blue-400 rounded-full flex items-center justify-center bg-white">
+                                    <i class="fas fa-atom text-6xl text-blue-500"></i>
+                                </div>
+                                <div class="absolute -top-4 -right-4 bg-yellow-400 w-16 h-16 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-bolt text-2xl"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Medical Applications -->
+            <div class="mb-16">
+                <div class="flex items-center mb-8">
+                    <div class="w-14 h-14 bg-red-600 rounded-xl flex items-center justify-center text-white text-2xl mr-4">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h4 class="text-3xl font-bold">2. การใช้ประโยชน์ทางการแพทย์</h4>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-red-50 rounded-2xl p-8 border-l-4 border-red-500">
+                        <h5 class="text-xl font-bold text-red-700 mb-4">
+                            <i class="fas fa-stethoscope mr-2"></i>การวินิจฉัยโรค
+                        </h5>
+                        <ul class="space-y-3 text-gray-700">
+                            <li class="flex items-start">
+                                <i class="fas fa-x-ray text-red-500 mt-1 mr-3"></i>
+                                <span>ถ่ายภาพรังสี X-ray เพื่อตรวจสอบความผิดปกติของร่างกาย</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-vial text-red-500 mt-1 mr-3"></i>
+                                <span>ใช้สารรังสีแก่ผู้ป่วยและติดตามการกระจายในอวัยวะ</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-notes-medical text-red-500 mt-1 mr-3"></i>
+                                <span>I-131 ตรวจสอบการทำงานของต่อมไทรอยด์</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="bg-pink-50 rounded-2xl p-8 border-l-4 border-pink-500">
+                        <h5 class="text-xl font-bold text-pink-700 mb-4">
+                            <i class="fas fa-procedures mr-2"></i>การบำบัดรักษาโรค
+                        </h5>
+                        <ul class="space-y-3 text-gray-700">
+                            <li class="flex items-start">
+                                <i class="fas fa-radiation text-pink-500 mt-1 mr-3"></i>
+                                <span>รังสีบำบัดมะเร็ง (Radiotherapy)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-capsules text-pink-500 mt-1 mr-3"></i>
+                                <span>Sr-89 รังสีเบตาบำบัด</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-syringe text-pink-500 mt-1 mr-3"></i>
+                                <span>ฆ่าเชื้ออุปกรณ์ทางการแพทย์ด้วยรังสีแกมมา</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Agriculture -->
+            <div class="mb-16">
+                <div class="flex items-center mb-8">
+                    <div class="w-14 h-14 bg-green-600 rounded-xl flex items-center justify-center text-white text-2xl mr-4">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <h4 class="text-3xl font-bold">3. การใช้ประโยชน์ทางการเกษตร</h4>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-green-50 rounded-2xl p-8">
+                        <h5 class="text-xl font-bold text-green-700 mb-4">
+                            <i class="fas fa-dna mr-2"></i>การปรับปรุงพันธุ์พืช
+                        </h5>
+                        <p class="text-gray-700 mb-4">
+                            ใช้รังสีแกมมา รังสีเอกซ์ และนิวตรอน เหนี่ยวนำให้เกิดการเปลี่ยนแปลงทางพันธุกรรม
+                        </p>
+                        <div class="grid grid-cols-2 gap-3 text-sm">
+                            <div class="bg-white p-3 rounded-lg text-center">
+                                <i class="fas fa-wheat-awn text-green-500 text-2xl mb-2"></i>
+                                <p>เพิ่มผลผลิต</p>
+                            </div>
+                            <div class="bg-white p-3 rounded-lg text-center">
+                                <i class="fas fa-shield-virus text-green-500 text-2xl mb-2"></i>
+                                <p>ทนต่อโรคและแมลง</p>
+                            </div>
+                            <div class="bg-white p-3 rounded-lg text-center">
+                                <i class="fas fa-sun text-green-500 text-2xl mb-2"></i>
+                                <p>ทนต่อความแล้ง</p>
+                            </div>
+                            <div class="bg-white p-3 rounded-lg text-center">
+                                <i class="fas fa-water text-green-500 text-2xl mb-2"></i>
+                                <p>ทนต่อความเค็ม</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-teal-50 rounded-2xl p-8">
+                        <h5 class="text-xl font-bold text-teal-700 mb-4">
+                            <i class="fas fa-bug mr-2"></i>การกำจัดและทำหมันแมลง
+                        </h5>
+                        <p class="text-gray-700 mb-4">
+                            แทนที่สารเคมีกำจัดแมลงที่ก่อให้เกิดสารตกค้าง
+                        </p>
+                        <ul class="space-y-3">
+                            <li class="flex items-center bg-white p-3 rounded-lg">
+                                <i class="fas fa-radiation text-teal-500 mr-3"></i>
+                                <span class="text-sm">ฉายรังสีผักและผลไม้สด</span>
+                            </li>
+                            <li class="flex items-center bg-white p-3 rounded-lg">
+                                <i class="fas fa-venus-mars text-teal-500 mr-3"></i>
+                                <span class="text-sm">ทำหมันแมลงตัวผู้แล้วปล่อยผสมพันธุ์</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Industrial -->
+            <div class="mb-16">
+                <div class="flex items-center mb-8">
+                    <div class="w-14 h-14 bg-orange-600 rounded-xl flex items-center justify-center text-white text-2xl mr-4">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                    <h4 class="text-3xl font-bold">4. การใช้ประโยชน์ทางอุตสาหกรรม</h4>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="bg-orange-50 p-6 rounded-xl text-center hover:shadow-lg transition-shadow">
+                        <i class="fas fa-ruler-combined text-4xl text-orange-500 mb-4"></i>
+                        <h5 class="font-bold mb-2">ระบบวัดและควบคุม</h5>
+                        <p class="text-sm text-gray-600">วัดระดับของเหลว ความหนาแน่น ความชื้น</p>
+                    </div>
+                    <div class="bg-orange-50 p-6 rounded-xl text-center hover:shadow-lg transition-shadow">
+                        <i class="fas fa-flask text-4xl text-orange-500 mb-4"></i>
+                        <h5 class="font-bold mb-2">กระบวนการผลิต</h5>
+                        <p class="text-sm text-gray-600">เสริมคุณภาพยาง ฉนวนไฟฟ้า บำบัดน้ำเสีย</p>
+                    </div>
+                    <div class="bg-orange-50 p-6 rounded-xl text-center hover:shadow-lg transition-shadow">
+                        <i class="fas fa-search text-4xl text-orange-500 mb-4"></i>
+                        <h5 class="font-bold mb-2">ตรวจสอบไม่ทำลาย</h5>
+                        <p class="text-sm text-gray-600">ถ่ายภาพโครงสร้างสะพาน รอยเชื่อมโลหะ</p>
+                    </div>
+                    <div class="bg-orange-50 p-6 rounded-xl text-center hover:shadow-lg transition-shadow">
+                        <i class="fas fa-tachometer-alt text-4xl text-orange-500 mb-4"></i>
+                        <h5 class="font-bold mb-2">วัดอัตราเร็วการไหล</h5>
+                        <p class="text-sm text-gray-600">ตรวจรอยรั่วในท่อและระบบ</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quote -->
+            <div class="bg-gradient-to-r from-gray-800 to-gray-900 rounded-2xl p-8 text-white text-center">
+                <i class="fas fa-fire text-5xl text-orange-500 mb-4"></i>
+                <h4 class="text-2xl font-bold mb-2">"นิวเคลียร์เหมือนไฟ"</h4>
+                <p class="text-xl text-gray-300">จะอุ่นหรือจะเผา ขึ้นอยู่กับคนใช้</p>
             </div>
         </div>
     </section>
 
-    <footer class="py-10 text-center text-gray-500 text-sm">
-        &copy; 2024 Nuclear Energy Education Portal. All rights reserved.
+    <!-- Section 3: Common Concerns -->
+    <section id="concerns" class="py-20 bg-gray-100">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="bg-orange-600 text-white px-4 py-1 rounded-full text-sm font-medium">ส่วนที่ 3</span>
+                <h3 class="text-4xl font-bold mt-4 mb-4">คำถามที่สังคมกังวล</h3>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    คำตอบสำหรับคำถามที่พบบ่อยเกี่ยวกับนิวเคลียร์
+                </p>
+            </div>
+
+            <div class="max-w-3xl mx-auto space-y-4">
+                <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                    <button class="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors" onclick="toggleAccordion(this)">
+                        <span class="font-bold text-lg">นิวเคลียร์อันตรายไหม?</span>
+                        <i class="fas fa-chevron-down transition-transform"></i>
+                    </button>
+                    <div class="hidden px-6 pb-4 text-gray-700">
+                        <p>ขึ้นอยู่กับการควบคุมและมาตรการป้องกัน รังสีในปริมาณที่ควบคุมได้มีประโยชน์ทางการแพทย์และอุตสาหกรรมมากมาย โรงไฟฟ้านิวเคลียร์มีมาตรฐานความปลอดภัยสูงมาก</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                    <button class="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors" onclick="toggleAccordion(this)">
+                        <span class="font-bold text-lg">เราได้รับรังสีทุกวันจริงเหรอ?</span>
+                        <i class="fas fa-chevron-down transition-transform"></i>
+                    </button>
+                    <div class="hidden px-6 pb-4 text-gray-700">
+                        <p>ใช่ครับ รังสีจากธรรมชาติ (background radiation) มีอยู่ทั่วไป เช่น จากหินแร่ น้ำดื่ม และรังสีคอสมิกจากอวกาศ นอกจากนี้ยังมีรังสีจากเทคโนโลยีที่มนุษย์สร้างขึ้นเพื่อใช้ประโยชน์</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                    <button class="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors" onclick="toggleAccordion(this)">
+                        <span class="font-bold text-lg">กากกัมมันตรังสีจัดการยังไง?</span>
+                        <i class="fas fa-chevron-down transition-transform"></i>
+                    </button>
+                    <div class="hidden px-6 pb-4 text-gray-700">
+                        <p>กากกัมมันตรังสีถูกจัดเก็บในภาชนะพิเศษที่มีความปลอดภัยสูง มีการควบคุมตามมาตรฐานสากล บางประเภทสามารถนำกลับมาใช้ประโยชน์ได้ (recycle) และบางประเภทต้องเก็บในที่ที่มีการป้องกันรังสีที่เหมาะสม</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                    <button class="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors" onclick="toggleAccordion(this)">
+                        <span class="font-bold text-lg">ฟิวชันดีกว่าฟิชชันจริงไหม?</span>
+                        <i class="fas fa-chevron-down transition-transform"></i>
+                    </button>
+                    <div class="hidden px-6 pb-4 text-gray-700">
+                        <p>ฟิวชันมีข้อดีคือให้พลังงานมากกว่า ไม่เกิดกากกัมมันตรังสีระยะยาว และเชื้อเพลิง (ไฮโดรเจน) มีมากในธรรมชาติ แต่ยังอยู่ในขั้นวิจัยและพัฒนา เนื่องจากต้องการอุณหภูมิสูงมาก (~10 ล้าน°C) เพื่อให้เกิดปฏิกิริยา</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section id="quiz" class="py-20 bg-gradient-to-br from-blue-600 to-purple-700 text-white">
+        <div class="container mx-auto px-6 max-w-2xl">
+            <div class="bg-white text-slate-900 p-10 rounded-3xl shadow-2xl">
+                <div class="text-center mb-8">
+                    <i class="fas fa-graduation-cap text-5xl text-blue-600 mb-4"></i>
+                    <h3 class="text-3xl font-bold">ทดสอบความรู้</h3>
+                    <p class="text-blue-600 font-semibold mt-1">ชุดที่ 1: ระดับพื้นฐาน (20 ข้อ)</p>
+                    <p class="text-gray-500 text-sm mt-1">จงเลือกคำตอบที่ถูกต้องที่สุดเพียงข้อเดียว</p>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2 mb-6">
+                    <div id="quiz-progress" class="bg-blue-500 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+                <div id="quiz-container">
+                    <p id="question" class="text-xl mb-6 font-medium">โหลดคำถาม...</p>
+                    <div id="options" class="grid gap-4"></div>
+                    <div id="result" class="mt-6 text-center font-bold text-xl hidden"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 bg-slate-900 text-gray-400">
+        <div class="container mx-auto px-6 text-center">
+            <div class="flex justify-center items-center mb-6">
+                <i class="fas fa-atom text-blue-400 text-3xl mr-3"></i>
+                <span class="text-2xl font-bold text-white">Clear & Clear with Nuclear</span>
+            </div>
+            <p class="mb-4">เอกสารเรียบเรียงเนื้อหาเกี่ยวกับนิวเคลียร์ สื่อสารด้วยภาษาที่เข้าใจง่าย</p>
+            <p class="text-sm">ยึดตามแหล่งข้อมูลทางวิชาการที่ตรวจสอบได้ | IAEA และหน่วยงานระดับนานาชาติ</p>
+            <div class="mt-8 pt-8 border-t border-gray-700">
+                <p class="text-sm">&copy; 2024 Clear & Clear with Nuclear. All rights reserved.</p>
+            </div>
+        </div>
     </footer>
 
     <script src="scirpt.js"></script>
