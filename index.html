@@ -12,16 +12,20 @@
 
     <!-- Navigation -->
     <nav class="fixed w-full bg-slate-900 text-white z-50 shadow-lg transition-all duration-300" id="navbar">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <h1 class="text-2xl font-bold tracking-tighter">
-                <i class="fas fa-atom text-blue-400 mr-2"></i>NUCLEAR
-            </h1>
-            <div class="hidden md:flex space-x-6">
-                <a href="#home" class="hover:text-blue-400 transition-colors">หน้าแรก</a>
-                <a href="#basics" class="hover:text-blue-400 transition-colors">พื้นฐาน</a>
-                <a href="#daily" class="hover:text-blue-400 transition-colors">ชีวิตประจำวัน</a>
-                <a href="#concerns" class="hover:text-blue-400 transition-colors">คำถามที่พบบ่อย</a>
-                <a href="#quiz" class="bg-blue-600 px-4 py-1 rounded-full hover:bg-blue-500 transition-all">ทดสอบความรู้</a>
+        <div class="container mx-auto px-6">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <i class="fas fa-atom text-2xl mr-3"></i>
+                    <span class="text-xl font-bold">Clear & Clear with Nuclear</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="hover:text-blue-400 transition-colors">หน้าแรก</a>
+                    <a href="#basics" class="hover:text-blue-400 transition-colors">พื้นฐาน</a>
+                    <a href="#daily" class="hover:text-blue-400 transition-colors">ชีวิตประจำวัน</a>
+                    <a href="#concerns" class="hover:text-blue-400 transition-colors">คำถามที่พบบ่อย</a>
+                    <a href="#game" class="bg-green-600 px-4 py-1 rounded-full hover:bg-green-500 transition-all">เกม</a>
+                    <a href="#quiz" class="bg-blue-600 px-4 py-1 rounded-full hover:bg-blue-500 transition-all">ทดสอบความรู้</a>
+                </div>
             </div>
         </div>
     </nav>
@@ -88,8 +92,7 @@
                 <span class="bg-blue-600 text-white px-4 py-1 rounded-full text-sm font-medium">ส่วนที่ 1</span>
                 <h3 class="text-4xl font-bold mt-4 mb-4">พื้นฐานนิวเคลียร์ที่ควรทราบ</h3>
                 <p class="text-gray-600 max-w-2xl mx-auto">
-                    คำว่า"นิวเคลียร์"มักถูกเชื่อมโยงกับอาวุธหรือภัยอันตราย อย่างไรก็ตาม 
-                    ในทางวิทยาศาสตร์ นิวเคลียร์มีความหมายกว้างกว่านั้นมาก
+                    คำว่า"นิวเคลียร์"มักถูกเชื่อมโยงกับอาวุธหรือภัยอันตรายอย่างไรก็ตามในทางวิทยาศาสตร์นิวเคลียร์มีความหมายกว้างกว่านั้นมาก
                 </p>
             </div>
 
@@ -211,7 +214,7 @@
                                 <i class="fas fa-cut text-purple-600 mt-1 mr-3 text-xl"></i>
                                 <div>
                                     <p class="font-semibold text-gray-800">การค้นพบฟิชชัน (1939)</p>
-                                    <p class="text-gray-600">อธิบายทางทฤษฎีว่านิวเคียสยูเรเนียมแตกเป็นธาตุเบาลงและปล่อยพลังงานมหาศาล</p>
+                                    <p class="text-gray-600">อธิบายทางทฤษฎีว่านิวเคลียสยูเรเนียมแตกเป็นธาตุเบาลงและปล่อยพลังงานมหาศาล</p>
                                 </div>
                             </div>
                             <div class="flex items-start">
@@ -319,7 +322,7 @@
 
             <!-- Comparison -->
             <div class="bg-gradient-to-r from-red-500 to-purple-600 rounded-2xl p-8 text-white mb-12">
-                <h4 class="text-2xl font-bold text-center mb-6">เปรียบเทียบกำลังผลิต</h4>
+                <h4 class="text-2xl font-bold text-center mb-6">เปรียบเทียบพลังงานของปฏิกิริยา</h4>
                 <div class="grid md:grid-cols-3 gap-6 text-center">
                     <div class="bg-white bg-opacity-20 p-6 rounded-xl backdrop-blur">
                         <p class="text-4xl font-bold mb-2">4M</p>
@@ -334,7 +337,7 @@
                         <p class="text-sm">เทียบกับเผาไหม้น้ำมัน/ถ่านหิน</p>
                     </div>
                 </div>
-                <p class="text-center mt-4 text-sm opacity-90">ที่มา: https://shorturl.asia/7rAsx</p>
+                <p class="text-center mt-4 text-sm opacity-90">ที่มา: https://www.energy.gov/ne/articles/fission-and-fusion-what-difference</p>
             </div>
 
             <!-- Radiation Section -->
@@ -343,6 +346,74 @@
                     <i class="fas fa-radiation text-5xl text-yellow-500 mb-4"></i>
                     <h4 class="text-3xl font-bold">รังสี (Radiation)</h4>
                     <p class="text-gray-600 mt-2">พลังงานที่เคลื่อนที่จากที่หนึ่งไปยังอีกที่หนึ่ง</p>
+                </div>
+
+                <!-- Radiation Sources -->
+                <div class="bg-blue-50 p-6 rounded-xl mb-8">
+                    <h5 class="text-xl font-bold text-blue-700 mb-4">
+                        <i class="fas fa-atom mr-2"></i>แหล่งกำเนิดรังสี
+                    </h5>
+                    
+                    <!-- Radiation Sources Image -->
+                    <div class="mb-6 text-center">
+                        <img src="แหล่งงกำเนิดรังสี.png" 
+                             alt="แหล่งกำเนิดรังสีจากวัสดุกัมมันตรังสี" 
+                             class="rounded-lg shadow-md mx-auto max-w-full"
+                             loading="lazy">
+                        <p class="text-xs text-gray-600 mt-2">แหล่งกำเนิดรังสี: วัสดุกัมมันตรังสีของนิวไคลด์</p>
+                    </div>
+                    
+                    <p class="text-gray-700 leading-relaxed mb-4">
+                       
+                    </p>
+                    
+                    <p class="text-gray-700 leading-relaxed">
+                        <strong>แหล่งกำเนิดรังสี</strong> คือวัสดุที่มี "นิวไคลด์ไม่เสถียร" ซึ่งเป็นนิวเคลียสที่มีพลังงานส่วนเกินอยู่ภายใน 
+                        นิวไคลด์เหล่านี้จะพยายามปรับตัวให้เข้าสู่สถานะที่สมดุลหรือเสถียรขึ้นผ่านกระบวนการที่เรียกว่า <strong>การสลายตัว (Radioactive Decay)</strong> 
+                        โดยในระหว่างกระบวนการนี้จะมีการปลดปล่อยพลังงานออกมาในรูปแบบของรังสีไอออนไนซ์
+                    </p>
+                    
+                    <div class="bg-white p-4 rounded-lg border border-blue-200">
+                        <h6 class="font-bold text-blue-800 mb-3">คุณสมบัติของรังสีหลัก 3 ชนิด</h6>
+                        
+                        <div class="space-y-4">
+                            <!-- Alpha -->
+                            <div class="flex items-start">
+                                <div class="w-3 h-3 bg-red-500 rounded-full mt-1 mr-3 flex-shrink-0"></div>
+                                <div>
+                                    <p class="font-semibold text-gray-800">อนุภาคแอลฟา (Alpha)</p>
+                                    <p class="text-sm text-gray-600">
+                                        มีมวลมากและมีประจุบวก (นิวเคลียสของฮีเลียม) แม้จะมีพลังงานสูงแต่เดินทางในอากาศได้ระยะสั้นมาก 
+                                        มีอำนาจทะลุทะลวงต่ำที่สุด สามารถกั้นได้ด้วยกระดาษเพียงแผ่นเดียวหรือผิวหนังชั้นนอกของมนุษย์
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <!-- Beta -->
+                            <div class="flex items-start">
+                                <div class="w-3 h-3 bg-orange-500 rounded-full mt-1 mr-3 flex-shrink-0"></div>
+                                <div>
+                                    <p class="font-semibold text-gray-800">อนุภาคบีตา (Beta)</p>
+                                    <p class="text-sm text-gray-600">
+                                        เป็นอิเล็กตรอนที่มีความเร็วสูง มีมวลน้อยกว่าแอลฟามาก มีอำนาจทะลุทะลวงปานกลาง 
+                                        สามารถทะลุผ่านกระดาษได้ แต่จะถูกกั้นได้ด้วยแผ่นอะลูมิเนียมหรือพลาสติกหนา
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <!-- Gamma -->
+                            <div class="flex items-start">
+                                <div class="w-3 h-3 bg-purple-500 rounded-full mt-1 mr-3 flex-shrink-0"></div>
+                                <div>
+                                    <p class="font-semibold text-gray-800">รังสีแกมมา (Gamma)</p>
+                                    <p class="text-sm text-gray-600">
+                                        เป็นคลื่นแม่เหล็กไฟฟ้าพลังงานสูง ไม่มีมวลและไม่มีประจุไฟฟ้า มีอำนาจทะลุทะลวงสูงที่สุดในกลุ่มนี้ 
+                                        สามารถทะลุผ่านร่างกายมนุษย์ได้ จึงต้องใช้วัสดุที่มีความหนาแน่นสูงมาก เช่น ตะกั่วหรือคอนกรีตหนาในการกำบังรังสี
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="grid md:grid-cols-2 gap-8 mb-8">
@@ -356,7 +427,7 @@
                         <ul class="text-sm text-gray-600 space-y-2">
                             <li><i class="fas fa-wifi mr-2"></i>คลื่นวิทยุ</li>
                             <li><i class="fas fa-broadcast-tower mr-2"></i>ไมโครเวฟ</li>
-                            <li><i class="fas fa-sun mr-2"></i>แสงvisible</li>
+                            <li><i class="fas fa-sun mr-2"></i>แสงที่มองเห็นได้ </li>
                         </ul>
                     </div>
 
@@ -695,6 +766,54 @@
                         <p>ฟิวชันมีข้อดีคือให้พลังงานมากกว่า ไม่เกิดกากกัมมันตรังสีระยะยาว และเชื้อเพลิง (ไฮโดรเจน) มีมากในธรรมชาติ แต่ยังอยู่ในขั้นวิจัยและพัฒนา เนื่องจากต้องการอุณหภูมิสูงมาก (~10 ล้าน°C) เพื่อให้เกิดปฏิกิริยา</p>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Game Section -->
+    <section id="game" class="py-20 bg-gradient-to-br from-green-600 to-teal-700 text-white">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <div class="bg-white text-slate-900 p-10 rounded-3xl shadow-2xl">
+                <div class="text-center mb-8">
+                    <i class="fas fa-gamepad text-5xl text-green-600 mb-4"></i>
+                    <h3 class="text-3xl font-bold">เกมจับคู่ธาตุ</h3>
+                    <p class="text-green-600 font-semibold mt-1">Element Matcher</p>
+                    <p class="text-gray-500 text-sm mt-1">จับคู่สัญลักษณ์ธาตุกับชื่อธาตุที่เกี่ยวข้องกับนิวเคลียร์</p>
+                </div>
+                
+                <!-- Game Stats -->
+                <div class="grid grid-cols-3 gap-4 mb-6">
+                    <div class="bg-blue-50 p-3 rounded-lg text-center">
+                        <p class="text-sm text-gray-600">คะแนน</p>
+                        <p class="text-2xl font-bold text-blue-600" id="game-score">0</p>
+                    </div>
+                    <div class="bg-green-50 p-3 rounded-lg text-center">
+                        <p class="text-sm text-gray-600">คู่ที่จับได้</p>
+                        <p class="text-2xl font-bold text-green-600" id="game-matches">0/8</p>
+                    </div>
+                    <div class="bg-purple-50 p-3 rounded-lg text-center">
+                        <p class="text-sm text-gray-600">เวลา</p>
+                        <p class="text-2xl font-bold text-purple-600" id="game-timer">0:00</p>
+                    </div>
+                </div>
+
+                <!-- Game Board -->
+                <div id="game-board" class="grid grid-cols-4 gap-3 mb-6">
+                    <!-- Cards will be generated by JavaScript -->
+                </div>
+
+                <!-- Game Controls -->
+                <div class="flex justify-center space-x-4">
+                    <button onclick="startGame()" class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                        <i class="fas fa-play mr-2"></i>เริ่มเกมใหม่
+                    </button>
+                    <button onclick="showHint()" class="bg-yellow-500 text-white px-6 py-2 rounded-lg hover:bg-yellow-600 transition-colors">
+                        <i class="fas fa-lightbulb mr-2"></i>คำใบ้ (-20 คะแนน)
+                    </button>
+                </div>
+
+                <!-- Game Message -->
+                <div id="game-message" class="hidden mt-4 p-4 rounded-lg text-center font-bold"></div>
             </div>
         </div>
     </section>

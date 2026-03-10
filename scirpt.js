@@ -178,8 +178,291 @@ function toggleImage(imageId) {
     }
 }
 
+// ฟังก์ชันสำหรับเกมจับคู่ธาตุ
+let gameState = {
+    cards: [],
+    flippedCards: [],
+    matchedPairs: 0,
+    score: 1000,
+    attempts: 0,
+    timer: 0,
+    timerInterval: null,
+    isPlaying: false
+};
+
+// ข้อมูลธาตุที่ใช้ในเกม
+const elements = [
+    { symbol: 'U', name: 'ยูเรเนียม', info: 'เชื้อเพลิงนิวเคลียร์' },
+    { symbol: 'H', name: 'ไฮโดรเจน', info: 'เชื้อเพลิงฟิวชัน' },
+    { symbol: 'He', name: 'ฮีเลียม', info: 'ผลิตภัณฑ์ฟิวชัน' },
+    { symbol: 'Pu', name: 'พลูโทเนียม', info: 'เชื้อเพลิงนิวเคลียร์' },
+    { symbol: 'Th', name: 'ทอเรียม', info: 'เชื้อเพลิงทางเลือก' },
+    { symbol: 'I', name: 'ไอโอดีน', info: 'การวินิจฉัยทางการแพทย์' },
+    { symbol: 'Cs', name: 'ซีเซียม', info: 'ผลิตภัณฑ์ฟิชชัน' },
+    { symbol: 'Sr', name: 'สตรอนเชียม', info: 'การบำบัดทางการแพทย์' }
+];
+
+// เริ่มเกมใหม่
+function startGame() {
+    // รีเซ็ตสถานะเกม
+    gameState = {
+        cards: [],
+        flippedCards: [],
+        matchedPairs: 0,
+        score: 1000,
+        attempts: 0,
+        timer: 0,
+        timerInterval: null,
+        isPlaying: true
+    };
+    
+    // สร้างไพ่
+    createCards();
+    shuffleCards();
+    renderGameBoard();
+    updateGameStats();
+    startTimer();
+    hideGameMessage();
+}
+
+// สร้างไพ่ทั้งหมด
+function createCards() {
+    gameState.cards = [];
+    elements.forEach((element, index) => {
+        // สร้างไพ่สัญลักษณ์
+        gameState.cards.push({
+            id: index * 2,
+            type: 'symbol',
+            content: element.symbol,
+            pairId: index,
+            element: element
+        });
+        // สร้างไพ่ชื่อ
+        gameState.cards.push({
+            id: index * 2 + 1,
+            type: 'name',
+            content: element.name,
+            pairId: index,
+            element: element
+        });
+    });
+}
+
+// สับไพ่
+function shuffleCards() {
+    for (let i = gameState.cards.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [gameState.cards[i], gameState.cards[j]] = [gameState.cards[j], gameState.cards[i]];
+    }
+}
+
+// แสดงกระดานเกม
+function renderGameBoard() {
+    const board = document.getElementById('game-board');
+    board.innerHTML = '';
+    
+    gameState.cards.forEach(card => {
+        const cardElement = document.createElement('div');
+        cardElement.className = 'card bg-gradient-to-br from-blue-500 to-purple-600 text-white p-4 rounded-lg cursor-pointer transform transition-all duration-300 hover:scale-105 text-center font-bold text-lg';
+        cardElement.dataset.cardId = card.id;
+        cardElement.dataset.pairId = card.pairId;
+        cardElement.dataset.flipped = 'false';
+        cardElement.textContent = '?';
+        cardElement.onclick = () => flipCard(card.id);
+        board.appendChild(cardElement);
+    });
+}
+
+// พลิกไพ่
+function flipCard(cardId) {
+    if (!gameState.isPlaying) return;
+    
+    const card = gameState.cards.find(c => c.id === cardId);
+    const cardElement = document.querySelector(`[data-card-id="${cardId}"]`);
+    
+    // ตรวจสอบว่าไพ่ถูกพลิกแล้วหรือไม่
+    if (cardElement.dataset.flipped === 'true') return;
+    
+    // ตรวจสอบว่ามีไพ่ 2 ใบถูกพลิกแล้วหรือไม่
+    if (gameState.flippedCards.length >= 2) return;
+    
+    // พลิกไพ่
+    cardElement.dataset.flipped = 'true';
+    cardElement.textContent = card.content;
+    cardElement.classList.add('flipped');
+    
+    // เพิ่มไพ่ที่พลิกลงในรายการ
+    gameState.flippedCards.push(card);
+    
+    // ตรวจสอบว่ามี 2 ไพ่ถูกพลิกหรือไม่
+    if (gameState.flippedCards.length === 2) {
+        gameState.attempts++;
+        checkMatch();
+    }
+}
+
+// ตรวจสอบการจับคู่
+function checkMatch() {
+    const [card1, card2] = gameState.flippedCards;
+    
+    if (card1.pairId === card2.pairId) {
+        // จับคู่สำเร็จ
+        setTimeout(() => {
+            const cardElement1 = document.querySelector(`[data-card-id="${card1.id}"]`);
+            const cardElement2 = document.querySelector(`[data-card-id="${card2.id}"]`);
+            
+            cardElement1.classList.add('bg-green-500', 'border-2', 'border-green-300');
+            cardElement2.classList.add('bg-green-500', 'border-2', 'border-green-300');
+            cardElement1.onclick = null;
+            cardElement2.onclick = null;
+            
+            gameState.matchedPairs++;
+            showGameMessage(`ถูกต้อง! ${card1.element.info}`, 'success');
+            
+            // ตรวจสอบว่าจบเกมหรือไม่
+            if (gameState.matchedPairs === elements.length) {
+                endGame();
+            }
+            
+            gameState.flippedCards = [];
+            updateGameStats();
+        }, 500);
+    } else {
+        // จับคู่ผิด
+        setTimeout(() => {
+            const cardElement1 = document.querySelector(`[data-card-id="${card1.id}"]`);
+            const cardElement2 = document.querySelector(`[data-card-id="${card2.id}"]`);
+            
+            cardElement1.textContent = '?';
+            cardElement2.textContent = '?';
+            cardElement1.dataset.flipped = 'false';
+            cardElement2.dataset.flipped = 'false';
+            cardElement1.classList.remove('flipped');
+            cardElement2.classList.remove('flipped');
+            
+            gameState.score = Math.max(0, gameState.score - 10);
+            showGameMessage('ผิด! ลองใหม่', 'error');
+            
+            gameState.flippedCards = [];
+            updateGameStats();
+        }, 1000);
+    }
+}
+
+// แสดงคำใบ้
+function showHint() {
+    if (!gameState.isPlaying || gameState.flippedCards.length > 0) return;
+    
+    // หาไพ่ที่ยังไม่ถูกจับคู่
+    const unmatchedCards = gameState.cards.filter(card => {
+        const cardElement = document.querySelector(`[data-card-id="${card.id}"]`);
+        return cardElement.dataset.flipped === 'false';
+    });
+    
+    if (unmatchedCards.length >= 2) {
+        // สุ่มเลือกไพ่ 2 ใบที่เป็นคู่กัน
+        const randomCard = unmatchedCards[Math.floor(Math.random() * unmatchedCards.length)];
+        const pairCard = unmatchedCards.find(card => card.pairId === randomCard.pairId && card.id !== randomCard.id);
+        
+        if (pairCard) {
+            // แสดงไพ่คู่ที่ถูกต้องเป็นเวลาสั้นๆ
+            const cardElement1 = document.querySelector(`[data-card-id="${randomCard.id}"]`);
+            const cardElement2 = document.querySelector(`[data-card-id="${pairCard.id}"]`);
+            
+            cardElement1.textContent = randomCard.content;
+            cardElement2.textContent = pairCard.content;
+            cardElement1.classList.add('bg-yellow-500');
+            cardElement2.classList.add('bg-yellow-500');
+            
+            setTimeout(() => {
+                cardElement1.textContent = '?';
+                cardElement2.textContent = '?';
+                cardElement1.classList.remove('bg-yellow-500');
+                cardElement2.classList.remove('bg-yellow-500');
+            }, 2000);
+            
+            gameState.score = Math.max(0, gameState.score - 20);
+            updateGameStats();
+            showGameMessage('คำใบ้: ดูไพ่สีเหลือง!', 'hint');
+        }
+    }
+}
+
+// เริ่มจับเวลา
+function startTimer() {
+    if (gameState.timerInterval) {
+        clearInterval(gameState.timerInterval);
+    }
+    
+    gameState.timerInterval = setInterval(() => {
+        gameState.timer++;
+        updateTimer();
+    }, 1000);
+}
+
+// อัปเดตเวลา
+function updateTimer() {
+    const minutes = Math.floor(gameState.timer / 60);
+    const seconds = gameState.timer % 60;
+    document.getElementById('game-timer').textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+}
+
+// อัปเดตสถิติเกม
+function updateGameStats() {
+    document.getElementById('game-score').textContent = gameState.score;
+    document.getElementById('game-matches').textContent = `${gameState.matchedPairs}/${elements.length}`;
+}
+
+// แสดงข้อความเกม
+function showGameMessage(message, type) {
+    const messageElement = document.getElementById('game-message');
+    messageElement.textContent = message;
+    messageElement.classList.remove('hidden');
+    
+    // กำหนดสีตามประเภทข้อความ
+    messageElement.classList.remove('bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800', 'bg-yellow-100', 'text-yellow-800');
+    
+    switch(type) {
+        case 'success':
+            messageElement.classList.add('bg-green-100', 'text-green-800');
+            break;
+        case 'error':
+            messageElement.classList.add('bg-red-100', 'text-red-800');
+            break;
+        case 'hint':
+            messageElement.classList.add('bg-yellow-100', 'text-yellow-800');
+            break;
+    }
+    
+    // ซ่อนข้อความหลัง 3 วินาที
+    setTimeout(() => {
+        hideGameMessage();
+    }, 3000);
+}
+
+// ซ่อนข้อความเกม
+function hideGameMessage() {
+    const messageElement = document.getElementById('game-message');
+    messageElement.classList.add('hidden');
+}
+
+// จบเกม
+function endGame() {
+    gameState.isPlaying = false;
+    clearInterval(gameState.timerInterval);
+    
+    // คำนวณคะแนนสุดท้าย
+    const finalScore = Math.max(0, gameState.score - (gameState.timer * 2));
+    
+    showGameMessage(`🎉 จบเกม! คะแนนสุดท้าย: ${finalScore} เวลา: ${Math.floor(gameState.timer / 60)}:${(gameState.timer % 60).toString().padStart(2, '0')}`, 'success');
+    
+    // อัปเดตคะแนนสุดท้าย
+    document.getElementById('game-score').textContent = finalScore;
+}
+
 // กำหนด event listener สำหรับเริ่มทำงานเมื่อโหลดหน้าเว็บเสร็จ
 document.addEventListener('DOMContentLoaded', () => {
     loadQuiz();           // เริ่มแบบทดสอบ
     setupInteractiveAtom(); // ตั้งค่าอะตอมแบบโต้ตอบ
+    startGame();          // เริ่มเกมจับคู่ธาตุ
 });
