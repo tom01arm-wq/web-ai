@@ -294,298 +294,6 @@ function toggleImage(imageId) {
     }
 }
 
-// ฟังก์ชันสำหรับเกมจับคู่ธาตุ
-let gameState = {
-    cards: [],
-    flippedCards: [],
-    matchedPairs: 0,
-    score: 1000,
-    attempts: 0,
-    timer: 0,
-    timerInterval: null,
-    isPlaying: false
-};
-
-// ข้อมูลธาตุที่ใช้ในเกม
-const elements = [
-    { symbol: 'U', name: 'ยูเรเนียม', info: 'เชื้อเพลิงนิวเคลียร์' },
-    { symbol: 'H', name: 'ไฮโดรเจน', info: 'เชื้อเพลิงฟิวชัน' },
-    { symbol: 'He', name: 'ฮีเลียม', info: 'ผลิตภัณฑ์ฟิวชัน' },
-    { symbol: 'Pu', name: 'พลูโทเนียม', info: 'เชื้อเพลิงนิวเคลียร์' },
-    { symbol: 'Th', name: 'ทอเรียม', info: 'เชื้อเพลิงทางเลือก' },
-    { symbol: 'I', name: 'ไอโอดีน', info: 'การวินิจฉัยทางการแพทย์' },
-    { symbol: 'Cs', name: 'ซีเซียม', info: 'ผลิตภัณฑ์ฟิชชัน' },
-    { symbol: 'Sr', name: 'สตรอนเชียม', info: 'การบำบัดทางการแพทย์' }
-];
-
-// เริ่มเกมใหม่
-function startGame() {
-    // รีเซ็ตสถานะเกม
-    gameState = {
-        cards: [],
-        flippedCards: [],
-        matchedPairs: 0,
-        score: 1000,
-        attempts: 0,
-        timer: 0,
-        timerInterval: null,
-        isPlaying: true
-    };
-    
-    // สร้างไพ่
-    createCards();
-    shuffleCards();
-    renderGameBoard();
-    updateGameStats();
-    hideGameMessage();
-    
-    // แสดงข้อความให้กดเริ่มเกมเพื่อเริ่มจับเวลา
-    showGameMessage('กดปุ่ม "เริ่มเกมใหม่" เพื่อเริ่มเล่น!', 'hint');
-}
-
-// สร้างไพ่ทั้งหมด
-function createCards() {
-    gameState.cards = [];
-    elements.forEach((element, index) => {
-        // สร้างไพ่สัญลักษณ์
-        gameState.cards.push({
-            id: index * 2,
-            type: 'symbol',
-            content: element.symbol,
-            pairId: index,
-            element: element
-        });
-        // สร้างไพ่ชื่อ
-        gameState.cards.push({
-            id: index * 2 + 1,
-            type: 'name',
-            content: element.name,
-            pairId: index,
-            element: element
-        });
-    });
-}
-
-// สับไพ่
-function shuffleCards() {
-    for (let i = gameState.cards.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [gameState.cards[i], gameState.cards[j]] = [gameState.cards[j], gameState.cards[i]];
-    }
-}
-
-// แสดงกระดานเกม
-function renderGameBoard() {
-    const board = document.getElementById('game-board');
-    board.innerHTML = '';
-    
-    gameState.cards.forEach(card => {
-        const cardElement = document.createElement('div');
-        cardElement.className = 'card bg-gradient-to-br from-blue-500 to-purple-600 text-white p-4 rounded-lg cursor-pointer transform transition-all duration-300 hover:scale-105 text-center font-bold text-lg';
-        cardElement.dataset.cardId = card.id;
-        cardElement.dataset.pairId = card.pairId;
-        cardElement.dataset.flipped = 'false';
-        cardElement.textContent = '?';
-        cardElement.onclick = () => flipCard(card.id);
-        board.appendChild(cardElement);
-    });
-}
-
-// พลิกไพ่
-function flipCard(cardId) {
-    if (!gameState.isPlaying) return;
-    
-    // เริ่มจับเวลาเมื่อคลิกไพ่ครั้งแรก
-    if (gameState.timer === 0 && gameState.timerInterval === null) {
-        startTimer();
-    }
-    
-    const card = gameState.cards.find(c => c.id === cardId);
-    const cardElement = document.querySelector(`[data-card-id="${cardId}"]`);
-    
-    // ตรวจสอบว่าไพ่ถูกพลิกแล้วหรือไม่
-    if (cardElement.dataset.flipped === 'true') return;
-    
-    // ตรวจสอบว่ามีไพ่ 2 ใบถูกพลิกแล้วหรือไม่
-    if (gameState.flippedCards.length >= 2) return;
-    
-    // พลิกไพ่
-    cardElement.dataset.flipped = 'true';
-    cardElement.textContent = card.content;
-    cardElement.classList.add('flipped');
-    
-    // เพิ่มไพ่ที่พลิกลงในรายการ
-    gameState.flippedCards.push(card);
-    
-    // ตรวจสอบว่ามี 2 ไพ่ถูกพลิกหรือไม่
-    if (gameState.flippedCards.length === 2) {
-        gameState.attempts++;
-        checkMatch();
-    }
-}
-
-// ตรวจสอบการจับคู่
-function checkMatch() {
-    const [card1, card2] = gameState.flippedCards;
-    
-    if (card1.pairId === card2.pairId) {
-        // จับคู่สำเร็จ
-        setTimeout(() => {
-            const cardElement1 = document.querySelector(`[data-card-id="${card1.id}"]`);
-            const cardElement2 = document.querySelector(`[data-card-id="${card2.id}"]`);
-            
-            // เปลี่ยนสีไพ่เป็นสีเขียวและเอาเอฟเฟกต์เดิมออก
-            cardElement1.classList.remove('from-blue-500', 'to-purple-600', 'hover:scale-105');
-            cardElement2.classList.remove('from-blue-500', 'to-purple-600', 'hover:scale-105');
-            cardElement1.classList.add('bg-gradient-to-br', 'from-green-500', 'to-green-600', 'border-2', 'border-green-300');
-            cardElement2.classList.add('bg-gradient-to-br', 'from-green-500', 'to-green-600', 'border-2', 'border-green-300');
-            cardElement1.onclick = null;
-            cardElement2.onclick = null;
-            
-            gameState.matchedPairs++;
-            showGameMessage(`ถูกต้อง! ${card1.element.info}`, 'success');
-            
-            // ตรวจสอบว่าจบเกมหรือไม่
-            if (gameState.matchedPairs === elements.length) {
-                endGame();
-            }
-            
-            gameState.flippedCards = [];
-            updateGameStats();
-        }, 500);
-    } else {
-        // จับคู่ผิด
-        setTimeout(() => {
-            const cardElement1 = document.querySelector(`[data-card-id="${card1.id}"]`);
-            const cardElement2 = document.querySelector(`[data-card-id="${card2.id}"]`);
-            
-            cardElement1.textContent = '?';
-            cardElement2.textContent = '?';
-            cardElement1.dataset.flipped = 'false';
-            cardElement2.dataset.flipped = 'false';
-            cardElement1.classList.remove('flipped');
-            cardElement2.classList.remove('flipped');
-            
-            gameState.score = Math.max(0, gameState.score - 10);
-            showGameMessage('ผิด! ลองใหม่', 'error');
-            
-            gameState.flippedCards = [];
-            updateGameStats();
-        }, 1000);
-    }
-}
-
-// แสดงคำใบ้
-function showHint() {
-    if (!gameState.isPlaying || gameState.flippedCards.length > 0) return;
-    
-    // หาไพ่ที่ยังไม่ถูกจับคู่
-    const unmatchedCards = gameState.cards.filter(card => {
-        const cardElement = document.querySelector(`[data-card-id="${card.id}"]`);
-        return cardElement.dataset.flipped === 'false';
-    });
-    
-    if (unmatchedCards.length >= 2) {
-        // สุ่มเลือกไพ่ 2 ใบที่เป็นคู่กัน
-        const randomCard = unmatchedCards[Math.floor(Math.random() * unmatchedCards.length)];
-        const pairCard = unmatchedCards.find(card => card.pairId === randomCard.pairId && card.id !== randomCard.id);
-        
-        if (pairCard) {
-            // แสดงไพ่คู่ที่ถูกต้องเป็นเวลาสั้นๆ
-            const cardElement1 = document.querySelector(`[data-card-id="${randomCard.id}"]`);
-            const cardElement2 = document.querySelector(`[data-card-id="${pairCard.id}"]`);
-            
-            cardElement1.textContent = randomCard.content;
-            cardElement2.textContent = pairCard.content;
-            cardElement1.classList.add('bg-yellow-500');
-            cardElement2.classList.add('bg-yellow-500');
-            
-            setTimeout(() => {
-                cardElement1.textContent = '?';
-                cardElement2.textContent = '?';
-                cardElement1.classList.remove('bg-yellow-500');
-                cardElement2.classList.remove('bg-yellow-500');
-            }, 2000);
-            
-            gameState.score = Math.max(0, gameState.score - 20);
-            updateGameStats();
-            showGameMessage('คำใบ้: ดูไพ่สีเหลือง!', 'hint');
-        }
-    }
-}
-
-// เริ่มจับเวลา
-function startTimer() {
-    if (gameState.timerInterval) {
-        clearInterval(gameState.timerInterval);
-    }
-    
-    gameState.timerInterval = setInterval(() => {
-        gameState.timer++;
-        updateTimer();
-    }, 1000);
-}
-
-// อัปเดตเวลา
-function updateTimer() {
-    const minutes = Math.floor(gameState.timer / 60);
-    const seconds = gameState.timer % 60;
-    document.getElementById('game-timer').textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-}
-
-// อัปเดตสถิติเกม
-function updateGameStats() {
-    document.getElementById('game-score').textContent = gameState.score;
-    document.getElementById('game-matches').textContent = `${gameState.matchedPairs}/${elements.length}`;
-}
-
-// แสดงข้อความเกม
-function showGameMessage(message, type) {
-    const messageElement = document.getElementById('game-message');
-    messageElement.textContent = message;
-    messageElement.classList.remove('hidden');
-    
-    // กำหนดสีตามประเภทข้อความ
-    messageElement.classList.remove('bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800', 'bg-yellow-100', 'text-yellow-800');
-    
-    switch(type) {
-        case 'success':
-            messageElement.classList.add('bg-green-100', 'text-green-800');
-            break;
-        case 'error':
-            messageElement.classList.add('bg-red-100', 'text-red-800');
-            break;
-        case 'hint':
-            messageElement.classList.add('bg-yellow-100', 'text-yellow-800');
-            break;
-    }
-    
-    // ซ่อนข้อความหลัง 3 วินาที
-    setTimeout(() => {
-        hideGameMessage();
-    }, 3000);
-}
-
-// ซ่อนข้อความเกม
-function hideGameMessage() {
-    const messageElement = document.getElementById('game-message');
-    messageElement.classList.add('hidden');
-}
-
-// จบเกม
-function endGame() {
-    gameState.isPlaying = false;
-    clearInterval(gameState.timerInterval);
-    
-    // คำนวณคะแนนสุดท้าย
-    const finalScore = Math.max(0, gameState.score - (gameState.timer * 2));
-    
-    showGameMessage(`🎉 จบเกม! คะแนนสุดท้าย: ${finalScore} เวลา: ${Math.floor(gameState.timer / 60)}:${(gameState.timer % 60).toString().padStart(2, '0')}`, 'success');
-    
-    // อัปเดตคะแนนสุดท้าย
-    document.getElementById('game-score').textContent = finalScore;
-}
-
 // ฟังก์ชันตั้งค่าอะตอม Energy Meter
 function setupEnergyAtom() {
     const atom = document.getElementById('energy-atom');
@@ -853,10 +561,384 @@ function setupEnergyAtom() {
     updateUI();
 }
 
+// Myth Buster Challenge Game Data (8 Levels)
+const mythBusterData = [
+    {
+        id: 1,
+        scenario: "ข่าวรายงานว่า 'โรงไฟฟ้านิวเคลียร์อาจระเบิดเหมือนระเบิดปรมาณูได้'",
+        myth: "โรงไฟฟ้าระเบิดได้เหมือนระเบิดนิวเคลียร์",
+        question: "ข้อใดถูกต้อง?",
+        options: [
+            "ใช่ โรงไฟฟ้าสามารถระเบิดได้เหมือนระเบิดนิวเคลียร์",
+            "ไม่ โรงไฟฟ้าทำงานที่อุณหภูมิและความดันต่ำ ไม่สามารถระเบิดได้",
+            "บางครั้งก็ระเบิดได้ถ้าควบคุมไม่ดี",
+            "ขึ้นอยู่กับขนาดของโรงไฟฟ้า"
+        ],
+        correct: 1,
+        explanation: "โรงไฟฟ้านิวเคลียร์ทำงานที่อุณหภูมิและความดันต่ำมาก ไม่สามารถระเบิดเหมือนอาวุธนิวเคลียร์ที่ต้องการการออกแบบพิเศษ"
+    },
+    {
+        id: 2,
+        scenario: "เปรียบเทียบรังสีที่ได้รับ: กล้วย 1 ลูก vs อยู่ใกล้โรงไฟฟ้านิวเคลียร์ 1 ปี",
+        myth: "โรงไฟฟ้าปล่อยรังสีมากกว่ากล้วย",
+        question: "อะไรให้รังสีมากกว่า?",
+        options: [
+            "กล้วย 1 ลูก",
+            "โรงไฟฟ้านิวเคลียร์ (อยู่ใกล้ 1 ปี)",
+            "เท่ากัน",
+            "ไม่มีรังสีทั้งคู่"
+        ],
+        correct: 0,
+        explanation: "กล้วยมีโพแทสเซียม-40 ซึ่งเป็นไอโซโทปกัมมันตรังสีธรรมชาติ คุณได้รับรังสีจากกล้วยมากกว่าจากโรงไฟฟ้านิวเคลียร์"
+    },
+    {
+        id: 3,
+        scenario: "การผลิตไฟฟ้าแบบไหนปล่อย CO2 มากที่สุด?",
+        myth: "นิวเคลียร์ทำให้เกิดมลพิษมาก",
+        question: "โรงไฟฟ้าแบบใดปล่อย CO2 มากที่สุด?",
+        options: [
+            "นิวเคลียร์",
+            "พลังงานลม",
+            "พลังงานแสงอาทิตย์",
+            "ถ่านหิน"
+        ],
+        correct: 3,
+        explanation: "โรงไฟฟ้านิวเคลียร์ไม่ปล่อย CO2 ระหว่างการผลิตไฟฟ้า ถ่านหินปล่อย CO2 มากที่สุด"
+    },
+    {
+        id: 4,
+        scenario: "กากกัมมันตรังสีจากโรงไฟฟ้านิวเคลียร์ 1 ปีเท่ากับกล่องขนาดเท่าใด?",
+        myth: "กากนิวเคลียร์กองเต็มโลก",
+        question: "กากกัมมันตรังสี 1 ปี พอดีกับ?",
+        options: [
+            "สนามฟุตบอล 10 สนาม",
+            "ตู้เย็น 1 ตู้",
+            "สระว่ายน้ำโอลิมปิก",
+            "ไม่มีกากเหลือ"
+        ],
+        correct: 1,
+        explanation: "กากกัมมันตรังสีจากโรงไฟฟ้า 1 ปีมีปริมาณน้อยมาก พอใส่ตู้เย็นได้ มีเทคโนโลยีจัดเก็บและรีไซเคิลอย่างปลอดภัย"
+    },
+    {
+        id: 5,
+        scenario: "ความปลอดภัยของโรงไฟฟ้านิวเคลียร์เทียบกับอุตสาหกรรมอื่น",
+        myth: "นิวเคลียร์ไม่ปลอดภัย 100%",
+        question: "โรงไฟฟ้านิวเคลียร์มีความปลอดภัยอย่างไร?",
+        options: [
+            "ไม่มีมาตรการความปลอดภัย",
+            "มีระบบความปลอดภัยหลายชั้น (Defense in Depth) มาตรฐานสูงกว่าอุตสาหกรรมอื่น",
+            "พึ่งพาความระมัดระวังของพนักงานอย่างเดียว",
+            "ปลอดภัยแค่ในวันที่ไม่มีอุบัติเหตุ"
+        ],
+        correct: 1,
+        explanation: "โรงไฟฟ้านิวเคลียร์มีระบบความปลอดภัยหลายชั้น (Defense in Depth) และมาตรฐานที่สูงกว่าอุตสาหกรรมอื่นมาก"
+    },
+    {
+        id: 6,
+        scenario: "นิวเคลียร์ใช้ประโยชน์อะไรในชีวิตประจำวัน?",
+        myth: "นิวเคลียร์ไม่มีประโยชน์",
+        question: "ข้อใดเป็นประโยชน์ของนิวเคลียร์?",
+        options: [
+            "ใช้แค่ผลิตไฟฟ้าเท่านั้น",
+            "ไม่มีประโยชน์ในชีวิตประจำวัน",
+            "ใช้ในการแพทย์ X-ray, ฆ่าเชื้ออาหาร, ตรวจสอบอุตสาหกรรม",
+            "ทำให้ผักสวยงาม"
+        ],
+        correct: 2,
+        explanation: "นิวเคลียร์ใช้ประโยชน์หลากหลาย: การแพทย์ (X-ray, MRI), ฆ่าเชื้ออาหาร, ตรวจสอบคุณภาพอุตสาหกรรม, การเกษตร"
+    },
+    {
+        id: 7,
+        scenario: "ฟิชชัน (Fission) vs ฟิวชัน (Fusion) ต่างกันอย่างไร?",
+        myth: "ฟิชชันและฟิวชันเหมือนกัน",
+        question: "ความต่างระหว่างฟิชชันกับฟิวชัน?",
+        options: [
+            "เหมือนกัน แค่ชื่อต่างกัน",
+            "ฟิชชัน=รวมตัว ฟิวชัน=แตกตัว",
+            "ฟิชชัน=แตกตัว ฟิวชัน=รวมตัว ต้องการอุณหภูมิสูง",
+            "ฟิชชันใช้ในโรงไฟฟ้า ฟิวชันใช้ทำระเบิด"
+        ],
+        correct: 2,
+        explanation: "ฟิชชัน = นิวเคลียสขนาดใหญ่แตกตัว (ใช้ในโรงไฟฟ้า) ฟิวชัน = นิวเคลียสรวมตัว ต้องการอุณหภูมิ ~10 ล้าน C"
+    },
+    {
+        id: 8,
+        scenario: "ใครตรวจสอบมาตรฐานความปลอดภัยของโรงไฟฟ้านิวเคลียร์?",
+        myth: "นักวิทยาศาสตร์ทำงานโดยไม่มีการตรวจสอบ",
+        question: "องค์กรใดกำกับดูแลโรงไฟฟ้านิวเคลียร์?",
+        options: [
+            "ไม่มีองค์กรกำกับ",
+            "IAEA (International Atomic Energy Agency) และหน่วยงานระดับชาติ",
+            "แค่บริษัทที่ผลิตเอง",
+            "องค์การสหประชาชาติทั่วไป"
+        ],
+        correct: 1,
+        explanation: "IAEA และหน่วยงานกำกับดูแลระดับชาติตรวจสอบมาตรฐานความปลอดภัยอย่างเข้มงวดทั่วโลก"
+    }
+];
+
+// Myth Buster Game State
+let mythGame = {
+    currentLevel: 0,
+    score: 0,
+    streak: 0,
+    answered: false,
+    highScore: 0
+};
+
+// Initialize Myth Buster Game
+function initMythBusterGame() {
+    const gameContainer = document.getElementById('myth-game-container');
+    if (!gameContainer) return;
+
+    // Load high score from localStorage
+    const savedHighScore = localStorage.getItem('mythBusterHighScore');
+    if (savedHighScore) {
+        mythGame.highScore = parseInt(savedHighScore);
+    }
+
+    showMythStartScreen();
+}
+
+// Show Start Screen
+function showMythStartScreen() {
+    const gameContainer = document.getElementById('myth-game-container');
+    if (!gameContainer) return;
+
+    gameContainer.innerHTML = `
+        <div class="text-center py-12">
+            <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                <i class="fas fa-search text-4xl text-white"></i>
+            </div>
+            <h4 class="text-3xl font-bold text-slate-800 mb-3">นิวเคลียร์: หาความจริง</h4>
+            <p class="text-gray-600 mb-2 max-w-md mx-auto">ทดสอบความรู้เกี่ยวกับความเข้าใจผิดต่อนิวเคลียร์</p>
+            <p class="text-sm text-blue-600 font-medium mb-8">8 ด่าน | คะแนนสูงสุด: ${mythGame.highScore}</p>
+            <button onclick="startMythGame()" class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-10 py-4 rounded-full font-bold text-lg hover:shadow-lg transform hover:scale-105 transition-all">
+                <i class="fas fa-play mr-2"></i>เริ่มเกม
+            </button>
+        </div>
+    `;
+}
+
+// Start Myth Game
+function startMythGame() {
+    mythGame.currentLevel = 0;
+    mythGame.score = 0;
+    mythGame.streak = 0;
+    mythGame.answered = false;
+    renderMythLevel();
+}
+
+// Render Current Level
+function renderMythLevel() {
+    const gameContainer = document.getElementById('myth-game-container');
+    if (!gameContainer) return;
+
+    const level = mythBusterData[mythGame.currentLevel];
+    const progress = ((mythGame.currentLevel + 1) / mythBusterData.length) * 100;
+
+    gameContainer.innerHTML = `
+        <div class="max-w-2xl mx-auto">
+            <!-- Progress Bar -->
+            <div class="mb-6">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-sm font-medium text-gray-600">ด่าน ${mythGame.currentLevel + 1}/${mythBusterData.length}</span>
+                    <span class="text-sm font-bold text-blue-600">คะแนน: ${mythGame.score}</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-3">
+                    <div class="bg-gradient-to-r from-blue-500 to-purple-500 h-3 rounded-full transition-all duration-500" style="width: ${progress}%"></div>
+                </div>
+            </div>
+
+            <!-- Scenario Card -->
+            <div class="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-red-500">
+                <div class="flex items-start mb-4">
+                    <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                        <i class="fas fa-exclamation-triangle text-red-500 text-xl"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm text-red-600 font-medium mb-1">ความเชื่อผิดๆ</p>
+                        <p class="text-gray-800 text-lg">${level.scenario}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question -->
+            <div class="bg-blue-50 rounded-xl p-4 mb-6">
+                <p class="text-blue-800 font-medium"><i class="fas fa-question-circle mr-2"></i>${level.question}</p>
+            </div>
+
+            <!-- Options -->
+            <div class="grid gap-3" id="myth-options">
+                ${level.options.map((option, index) => `
+                    <button onclick="answerMythQuestion(${index})" 
+                            class="option-btn bg-white border-2 border-gray-200 rounded-xl p-4 text-left hover:border-blue-400 hover:bg-blue-50 transition-all"
+                            data-index="${index}">
+                        <span class="font-bold text-blue-600 mr-3">${String.fromCharCode(65 + index)}.</span>
+                        <span class="text-gray-700">${option}</span>
+                    </button>
+                `).join('')}
+            </div>
+
+            <!-- Feedback Area -->
+            <div id="myth-feedback" class="hidden mt-6"></div>
+        </div>
+    `;
+}
+
+// Handle Answer
+function answerMythQuestion(selectedIndex) {
+    if (mythGame.answered) return;
+    mythGame.answered = true;
+
+    const level = mythBusterData[mythGame.currentLevel];
+    const isCorrect = selectedIndex === level.correct;
+    const options = document.querySelectorAll('.option-btn');
+    const feedbackDiv = document.getElementById('myth-feedback');
+
+    // Highlight correct and wrong answers
+    options.forEach((btn, index) => {
+        btn.disabled = true;
+        if (index === level.correct) {
+            btn.classList.add('bg-green-100', 'border-green-500');
+            btn.innerHTML += ' <i class="fas fa-check text-green-600 ml-2"></i>';
+        } else if (index === selectedIndex && !isCorrect) {
+            btn.classList.add('bg-red-100', 'border-red-500');
+            btn.innerHTML += ' <i class="fas fa-times text-red-600 ml-2"></i>';
+        }
+    });
+
+    // Update score and streak
+    if (isCorrect) {
+        mythGame.score += 100;
+        mythGame.streak++;
+        if (mythGame.streak >= 3) {
+            mythGame.score += 50; // Bonus for streak
+            mythGame.streak = 0;
+        }
+    } else {
+        mythGame.streak = 0;
+    }
+
+    // Show feedback
+    feedbackDiv.innerHTML = `
+        <div class="${isCorrect ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'} rounded-xl p-6 border-2">
+            <div class="flex items-start">
+                <div class="w-12 h-12 ${isCorrect ? 'bg-green-500' : 'bg-red-500'} rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                    <i class="fas ${isCorrect ? 'fa-check' : 'fa-times'} text-white text-xl"></i>
+                </div>
+                <div class="flex-1">
+                    <p class="font-bold ${isCorrect ? 'text-green-800' : 'text-red-800'} text-lg mb-2">
+                        ${isCorrect ? 'ถูกต้อง!' : 'ไม่ถูกต้อง'}
+                    </p>
+                    <p class="text-gray-700 mb-3">${level.explanation}</p>
+                    ${mythGame.streak === 0 && isCorrect ? '<p class="text-sm text-green-600 font-medium"><i class="fas fa-fire mr-1"></i>Streak เริ่มต้นใหม่!</p>' : ''}
+                    ${mythGame.streak === 0 && !isCorrect ? '' : ''}
+                    ${!isCorrect ? '<p class="text-sm text-gray-500">คำตอบที่ถูกต้อง: ' + level.options[level.correct] + '</p>' : ''}
+                </div>
+            </div>
+            <button onclick="nextMythLevel()" class="mt-4 w-full ${isCorrect ? 'bg-green-600 hover:bg-green-700' : 'bg-blue-600 hover:bg-blue-700'} text-white py-3 rounded-xl font-bold transition-colors">
+                ${mythGame.currentLevel < mythBusterData.length - 1 ? 'ด่านต่อไป <i class="fas fa-arrow-right ml-2"></i>' : 'ดูผลลัพธ์ <i class="fas fa-flag-checkered ml-2"></i>'}
+            </button>
+        </div>
+    `;
+    feedbackDiv.classList.remove('hidden');
+
+    // Update score display
+    const scoreDisplay = document.querySelector('.text-blue-600.font-bold');
+    if (scoreDisplay) {
+        scoreDisplay.textContent = `คะแนน: ${mythGame.score}`;
+    }
+}
+
+// Next Level
+function nextMythLevel() {
+    mythGame.currentLevel++;
+    mythGame.answered = false;
+
+    if (mythGame.currentLevel >= mythBusterData.length) {
+        showMythResults();
+    } else {
+        renderMythLevel();
+    }
+}
+
+// Show Results
+function showMythResults() {
+    const gameContainer = document.getElementById('myth-game-container');
+    if (!gameContainer) return;
+
+    // Update high score
+    if (mythGame.score > mythGame.highScore) {
+        mythGame.highScore = mythGame.score;
+        localStorage.setItem('mythBusterHighScore', mythGame.highScore);
+    }
+
+    const maxScore = mythBusterData.length * 100 + Math.floor(mythBusterData.length / 3) * 50;
+    const percentage = (mythGame.score / maxScore) * 100;
+    let message = '';
+    let icon = '';
+    let colorClass = '';
+
+    if (percentage >= 90) {
+        message = 'ยอดเยี่ยม! คุณเป็นนักวิทยาศาสตร์นิวเคลียร์ตัวจริง!';
+        icon = 'fa-trophy';
+        colorClass = 'from-yellow-400 to-orange-500';
+    } else if (percentage >= 70) {
+        message = 'ดีมาก! คุณเข้าใจนิวเคลียร์ระดับดี';
+        icon = 'fa-star';
+        colorClass = 'from-blue-400 to-blue-600';
+    } else if (percentage >= 50) {
+        message = 'พอใช้! ควรศึกษาเพิ่มเติม';
+        icon = 'fa-thumbs-up';
+        colorClass = 'from-green-400 to-teal-500';
+    } else {
+        message = 'ยังมีอะไรให้เรียนรู้อีกเยอะ!';
+        icon = 'fa-book-open';
+        colorClass = 'from-purple-400 to-pink-500';
+    }
+
+    gameContainer.innerHTML = `
+        <div class="text-center py-12">
+            <div class="w-24 h-24 bg-gradient-to-br ${colorClass} rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                <i class="fas ${icon} text-5xl text-white"></i>
+            </div>
+            <h4 class="text-3xl font-bold text-slate-800 mb-3">เกมจบแล้ว!</h4>
+            <p class="text-xl text-gray-600 mb-6">${message}</p>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-6 max-w-sm mx-auto mb-8">
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div class="text-center">
+                        <p class="text-sm text-gray-500">คะแนนรวม</p>
+                        <p class="text-3xl font-bold text-blue-600">${mythGame.score}</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-sm text-gray-500">คะแนนสูงสุด</p>
+                        <p class="text-3xl font-bold text-purple-600">${mythGame.highScore}</p>
+                    </div>
+                </div>
+                <div class="border-t pt-4">
+                    <p class="text-sm text-gray-500 mb-1">คำตอบถูก</p>
+                    <p class="text-xl font-bold text-gray-800">${Math.floor(mythGame.score / 100)}/${mythBusterData.length} ข้อ</p>
+                </div>
+            </div>
+
+            <div class="flex justify-center gap-4">
+                <button onclick="startMythGame()" class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-full font-bold hover:shadow-lg transform hover:scale-105 transition-all">
+                    <i class="fas fa-redo mr-2"></i>เล่นอีกครั้ง
+                </button>
+                <button onclick="showMythStartScreen()" class="bg-gray-200 text-gray-700 px-8 py-3 rounded-full font-bold hover:bg-gray-300 transition-all">
+                    <i class="fas fa-home mr-2"></i>หน้าหลัก
+                </button>
+            </div>
+        </div>
+    `;
+}
+
 // กำหนด event listener สำหรับเริ่มทำงานเมื่อโหลดหน้าเว็บเสร็จ
 document.addEventListener('DOMContentLoaded', () => {
     loadQuiz();           // เริ่มแบบทดสอบ
     setupInteractiveAtom(); // ตั้งค่าอะตอมแบบโต้ตอบ
     setupEnergyAtom();    // ตั้งค่าอะตอม Energy Meter
-    startGame();          // เริ่มเกมจับคู่ธาตุ
+    initMythBusterGame(); // เริ่มเกม Myth Buster ใหม่
 });
